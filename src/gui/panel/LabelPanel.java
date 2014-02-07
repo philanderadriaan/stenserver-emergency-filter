@@ -23,8 +23,8 @@ public class LabelPanel extends JPanel
   {
     super(new GridLayout(2, 1));
 
-    JLabel from_label = new JLabel(" From ");
-    JLabel to_label = new JLabel(" To ");
+    final JLabel from_label = new JLabel(" From ");
+    final JLabel to_label = new JLabel(" To ");
 
     add(from_label);
     add(to_label);

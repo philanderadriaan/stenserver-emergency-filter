@@ -11,8 +11,17 @@ import java.util.List;
  * @author padriaan
  * @version 1
  */
-public class FileAnalyzer
+public final class FileAnalyzer
 {
+  /**
+   * Hour during the noon.
+   */
+  private static final int NOON_HOUR = 12;
+  
+  /**
+   * Start year of java date class.
+   */
+  private static final int START_YEAR = 1900;
 
   /**
    * Prevents instantiation.
@@ -31,50 +40,50 @@ public class FileAnalyzer
    * @return A filtered data.
    */
   @SuppressWarnings("deprecation")
-  public static List<String> analyze(List<String> the_data, Date the_date_from,
-                                     Date the_date_to)
+  public static List<String> analyze(final List<String> the_data, final Date the_date_from,
+                                     final Date the_date_to)
   {
 
     int i = 0;
 
     while (i < the_data.size())
     {
-      String line = the_data.get(i);
+      final String line = the_data.get(i);
 
-      String emergency_keyword = "EMERGENCY";
-      String new_call_keyword = "*** New Call ***";
+      final String emergency_keyword = "EMERGENCY";
+      final String new_call_keyword = "*** New Call ***";
 
-      boolean emergency_keyword_found = line.contains(emergency_keyword);
-      boolean new_call_keyword_found = line.contains(new_call_keyword);
+      final boolean emergency_keyword_found = line.contains(emergency_keyword);
+      final boolean new_call_keyword_found = line.contains(new_call_keyword);
 
       if (emergency_keyword_found && new_call_keyword_found)
       {
-        String[] line_split = line.split(" ");
-        String date_string = line_split[0];
-        String[] date_string_split = date_string.split("/");
+        final String[] line_split = line.split(" ");
+        final String date_string = line_split[0];
+        final String[] date_string_split = date_string.split("/");
 
-        List<Integer> date_int_list = new ArrayList<Integer>();
+        final List<Integer> date_int_list = new ArrayList<Integer>();
 
         for (String j : date_string_split)
         {
-          int date_int = Integer.valueOf(j);
+          final int date_int = Integer.valueOf(j);
           date_int_list.add(date_int);
         }
 
-        int month = date_int_list.get(0) - 1;
-        int date = date_int_list.get(1);
-        int year = date_int_list.get(2) - 1900;
+        final int month = date_int_list.get(0) - 1;
+        final int date = date_int_list.get(1);
+        final int year = date_int_list.get(2) - START_YEAR;
 
-        Date current_date = new Date();
+        final Date current_date = new Date();
         current_date.setMonth(month);
         current_date.setDate(date);
         current_date.setYear(year);
-        current_date.setHours(12);
+        current_date.setHours(NOON_HOUR);
         current_date.setMinutes(0);
         current_date.setSeconds(0);
 
-        boolean after_date_from = current_date.after(the_date_from);
-        boolean before_date_to = current_date.before(the_date_to);
+        final boolean after_date_from = current_date.after(the_date_from);
+        final boolean before_date_to = current_date.before(the_date_to);
 
         if (after_date_from && before_date_to)
         {

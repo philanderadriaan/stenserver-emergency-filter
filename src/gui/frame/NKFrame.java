@@ -44,32 +44,24 @@ public class NKFrame extends JFrame
    * 
    * @param the_log_file Selected log file.
    */
-  public NKFrame(File the_log_file)
+  public NKFrame(final File the_log_file)
   {
-    super("NKSD 911 Calls");
-
+    super("STENServer Emergency Filter");
     my_log_file = the_log_file;
-
     setLayout(new BorderLayout());
-
-    LabelPanel label_panel = new LabelPanel();
-    FieldPanel field_panel = new FieldPanel(this);
-
-    Action save_action = new SaveAction(this);
-    JButton save_button = new JButton(save_action);
-
+    final LabelPanel label_panel = new LabelPanel();
+    final FieldPanel field_panel = new FieldPanel(this);
+    final Action save_action = new SaveAction(this);
+    final JButton save_button = new JButton(save_action);
     add(label_panel, BorderLayout.WEST);
     add(field_panel);
     add(save_button, BorderLayout.SOUTH);
-
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setVisible(true);
     pack();
-
-    int width = getWidth() * 2;
-    int height = getHeight();
+    final int width = getWidth() * 2;
+    final int height = getHeight();
     setSize(width, height);
-
     setLocationRelativeTo(null);
   }
 
@@ -81,12 +73,12 @@ public class NKFrame extends JFrame
    */
   private JDateChooser setDateChooser()
   {
-    JDateChooser date_chooser = new JDateChooser();
+    final JDateChooser date_chooser = new JDateChooser();
 
     date_chooser.setDateFormatString("MM/dd/yyyy");
 
-    Calendar today_calendar = Calendar.getInstance();
-    Date today_date = today_calendar.getTime();
+    final Calendar today_calendar = Calendar.getInstance();
+    final Date today_date = today_calendar.getTime();
     date_chooser.setDate(today_date);
 
     return date_chooser;

@@ -29,8 +29,8 @@ public class FieldPanel extends JPanel
   {
     super(new GridLayout(2, 1));
 
-    JDateChooser date_from_chooser = the_frame.getDateFromChooser();
-    JDateChooser date_to_chooser = the_frame.getDateToChooser();
+    final JDateChooser date_from_chooser = the_frame.getDateFromChooser();
+    final JDateChooser date_to_chooser = the_frame.getDateToChooser();
 
     add(date_from_chooser);
     add(date_to_chooser);

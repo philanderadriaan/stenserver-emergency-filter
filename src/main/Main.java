@@ -17,7 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author padriaan
  * @version 1
  */
-public class Main
+public final class Main
 {
 
   /**
@@ -28,7 +28,8 @@ public class Main
   }
 
   /**
-   * Starts the program by creating 
+   * Starts the program. The program look through the user's list of look and
+   * feels and adjust accordingly.
    * 
    * @param the_args Command line arguments. There is no parameters to this
    *          program so it does nothing.
@@ -43,7 +44,7 @@ public class Main
         {
           UIManager.setLookAndFeel(info.getClassName());
         }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+        catch (final ClassNotFoundException | InstantiationException | IllegalAccessException
             | UnsupportedLookAndFeelException e)
         {
           JOptionPane.showMessageDialog(null, e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
@@ -51,12 +52,12 @@ public class Main
         break;
       }
     }
-    String current_directory = System.getProperty("user.dir");
-    JFileChooser open_file_chooser = new JFileChooser(current_directory);
-    int approval = open_file_chooser.showOpenDialog(null);
+    final String current_directory = System.getProperty("user.dir");
+    final JFileChooser open_file_chooser = new JFileChooser(current_directory);
+    final int approval = open_file_chooser.showOpenDialog(null);
     if (approval == JFileChooser.APPROVE_OPTION)
     {
-      File log_file = open_file_chooser.getSelectedFile();
+      final File log_file = open_file_chooser.getSelectedFile();
       new NKFrame(log_file);
     }
   }

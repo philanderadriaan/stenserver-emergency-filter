@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @author padriaan
  * @version 1
  */
-public class FileIO
+public final class FileIO
 {
 
   /**
@@ -31,16 +31,17 @@ public class FileIO
    * 
    * @param the_file Input file.
    * @return Data representation of the contents of the file per line.
-   * @throws FileNotFoundException
+   * @throws FileNotFoundException Throws exception when STENServer.log file is
+   *           not found.
    */
-  public static List<String> input(File the_file) throws FileNotFoundException
+  public static List<String> input(final File the_file) throws FileNotFoundException
   {
-    List<String> data = new ArrayList<String>();
+    final List<String> data = new ArrayList<String>();
     Scanner input = null;
     input = new Scanner(the_file);
     while (input.hasNextLine())
     {
-      String line = input.nextLine();
+      final String line = input.nextLine();
       data.add(line);
     }
     input.close();
@@ -53,9 +54,12 @@ public class FileIO
    * @param the_path Path of the output file.
    * @param the_data Data to bit parsed into the file.
    * @throws UnsupportedEncodingException
-   * @throws FileNotFoundException
+   * @throws FileNotFoundException Throws exception when STENServer file is not
+   *           found.
+   * @throws UnsupportedEncodingException Throws exception when file contains
+   *           unsupported encoding.
    */
-  public static void output(String the_path, List<String> the_data)
+  public static void output(final String the_path, final List<String> the_data)
       throws FileNotFoundException, UnsupportedEncodingException
   {
     PrintWriter print_writer = null;

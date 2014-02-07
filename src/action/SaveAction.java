@@ -30,11 +30,23 @@ import com.toedter.calendar.JDateChooser;
 @SuppressWarnings("serial")
 public class SaveAction extends AbstractAction
 {
+  /**
+   * Last hour of the day.
+   */
+  private static final int LAST_HOUR = 23;
+  /**
+   * Last minute of the hour.
+   */
+  private static final int LAST_MINUTE = 59;
+  /**
+   * Last second of the minute.
+   */
+  private static final int LAST_SECOND = 59;
 
   /**
    * File dialog box for saving.
    */
-  JFileChooser my_save_file_chooser = new JFileChooser(System.getProperty("user.dir"));
+  private JFileChooser my_save_file_chooser = new JFileChooser(System.getProperty("user.dir"));
   /**
    * Current instance of the window. Holds key data to be used when saving.
    */
@@ -49,24 +61,24 @@ public class SaveAction extends AbstractAction
   {
     super("Save As...");
     my_frame = the_frame;
-    File default_file = new File("Output.txt");
+    final File default_file = new File("Output.txt");
     my_save_file_chooser.setSelectedFile(default_file);
   }
 
   @SuppressWarnings("deprecation")
   @Override
-  public final void actionPerformed(final ActionEvent arg0)
+  public final void actionPerformed(final ActionEvent the_event)
   {
-    JDateChooser date_from_chooser = my_frame.getDateFromChooser();
-    JDateChooser date_to_chooser = my_frame.getDateToChooser();
-    Date date_from = date_from_chooser.getDate();
-    Date date_to = date_to_chooser.getDate();
+    final JDateChooser date_from_chooser = my_frame.getDateFromChooser();
+    final JDateChooser date_to_chooser = my_frame.getDateToChooser();
+    final Date date_from = date_from_chooser.getDate();
+    final Date date_to = date_to_chooser.getDate();
     date_from.setHours(0);
     date_from.setMinutes(0);
     date_from.setSeconds(0);
-    date_to.setHours(23);
-    date_to.setMinutes(59);
-    date_to.setSeconds(59);
+    date_to.setHours(LAST_HOUR);
+    date_to.setMinutes(LAST_MINUTE);
+    date_to.setSeconds(LAST_SECOND);
     if (date_from.after(date_to))
     {
       JOptionPane.showMessageDialog(null, "Invalid date range.", "Error",
@@ -74,39 +86,39 @@ public class SaveAction extends AbstractAction
     }
     else
     {
-      int approval = my_save_file_chooser.showSaveDialog(null);
+      final int approval = my_save_file_chooser.showSaveDialog(null);
       if (approval == JFileChooser.APPROVE_OPTION)
       {
-        File log_file = my_frame.getLogFile();
+        final File log_file = my_frame.getLogFile();
         List<String> data = null;
         try
         {
           data = FileIO.input(log_file);
         }
-        catch (FileNotFoundException e)
+        catch (final FileNotFoundException e)
         {
           JOptionPane.showMessageDialog(null, e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
         }
         data = FileAnalyzer.analyze(data, date_from, date_to);
-        Format date_formatter = new SimpleDateFormat("MM/dd/yyyy");
-        String formatted_date_from = date_formatter.format(date_from);
-        String formatted_date_to = date_formatter.format(date_to);
-        StringBuilder title_builder = new StringBuilder();
+        final Format date_formatter = new SimpleDateFormat("MM/dd/yyyy");
+        final String formatted_date_from = date_formatter.format(date_from);
+        final String formatted_date_to = date_formatter.format(date_to);
+        final StringBuilder title_builder = new StringBuilder();
         title_builder.append("NKSD 911 Calls ");
         title_builder.append(formatted_date_from);
         title_builder.append(" to ");
         title_builder.append(formatted_date_to);
-        String title = title_builder.toString();
+        final String title = title_builder.toString();
         data.add(0, title);
-        File selected_file = my_save_file_chooser.getSelectedFile();
-        String path = selected_file.getPath();
+        final File selected_file = my_save_file_chooser.getSelectedFile();
+        final String path = selected_file.getPath();
         boolean write = true;
         if (selected_file.exists())
         {
-          String file_name = selected_file.getName();
-          String header = "Duplicate Detected";
-          String message = file_name + " exists. Overwrite?";
-          int selection =
+          final String file_name = selected_file.getName();
+          final String header = "Duplicate Detected";
+          final String message = file_name + " exists. Overwrite?";
+          final int selection =
               JOptionPane.showConfirmDialog(null, message, header, JOptionPane.YES_NO_OPTION);
 
           if (selection == JOptionPane.NO_OPTION)
@@ -120,7 +132,7 @@ public class SaveAction extends AbstractAction
           {
             FileIO.output(path, data);
           }
-          catch (FileNotFoundException | UnsupportedEncodingException e)
+          catch (final FileNotFoundException | UnsupportedEncodingException e)
           {
             JOptionPane.showMessageDialog(null, e.getMessage(), null,
                                           JOptionPane.ERROR_MESSAGE);
